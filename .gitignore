@@ -34,3 +34,4 @@ login.properties
 /.idea/assetWizardSettings.xml
 /build
 .cxx
+app/google-services.json
