@@ -16,6 +16,8 @@ room = "2.8.3"
 roomCommonJvm = "2.8.4"
 roomKtx = "2.8.4"
 googleServicesVersion = "4.4.4"
+firebaseBom = "34.6.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +45,10 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+firebase-config = {module = "com.google.firebase:firebase-config" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

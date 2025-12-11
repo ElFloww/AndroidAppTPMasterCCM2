@@ -32,7 +32,11 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +51,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.data.services.firebase.RemoteConfigManager
 
 val DeepDark = Color(0xFF050511)
 val NeonCyan = Color(0xFF00F0FF)
@@ -56,6 +61,16 @@ val NeonPurple = Color(0xFFBC13FE)
 fun MainScreen(
     onButtonClick: () -> Unit,
 ) {
+    var claudeValue by remember { mutableStateOf(RemoteConfigManager.getClaudeValue()) }
+
+    LaunchedEffect(Unit) {
+        RemoteConfigManager.fetchAndActivate { isSuccess ->
+            if (isSuccess) {
+                claudeValue = RemoteConfigManager.getClaudeValue()
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -79,6 +94,27 @@ fun MainScreen(
                     letterSpacing = 2.sp,
                     fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
                 )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(modifier = Modifier.size(8.dp).background(NeonCyan, CircleShape))
+                Spacer(modifier = Modifier.width(8.dp))
+                if (claudeValue) {
+                    Text(
+                        text = "Claude is enabled!",
+                        color = Color.Gray,
+                        fontSize = 12.sp,
+                        letterSpacing = 2.sp,
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                    )
+                } else {
+                    Text(
+                        text = "Claude is disabled.",
+                        color = Color.Gray,
+                        fontSize = 12.sp,
+                        letterSpacing = 2.sp,
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.weight(1f))
